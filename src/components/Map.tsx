@@ -6,17 +6,43 @@ import {
   Circle,
   MarkerClusterer,
 } from "@react-google-maps/api";
-import Distance from "./Distance"
-import Places from "./Places"
-
-
+import Distance from "./Distance";
+import Places from "./Places";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
 type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
-  return <div>Map</div>;
+  const mapRef = useRef<GoogleMap>()
+  const center = useMemo<LatLngLiteral>(() => ({ lat: 32, lng: 34 }), []);
+  const options = useMemo<MapOptions>(() => ({
+    disableDefaultUI: true,
+    clickableIcon: false
+
+
+
+  }), []);
+
+  const onLoad = useCallback((map) => (mapRef.current = map), []);
+
+
+  return (
+    <div className="container">
+      <div className="controls">
+        <h1>Commute?</h1>
+      </div>
+      <div className="map">
+        <GoogleMap
+          zoom={10}
+          center={center}
+          mapContainerClassName="map-container"
+          options={options}
+          onLoad={onLoad}
+        ></GoogleMap>
+      </div>
+    </div>
+  );
 }
 
 const defaultOptions = {
