@@ -16,7 +16,10 @@ type MapOptions = google.maps.MapOptions;
 export default function Map() {
   const [office, setOffice] = useState<LatLngLiteral>();
   const mapRef = useRef<GoogleMap>();
-  const center = useMemo<LatLngLiteral>(() => ({ lat: 32, lng: 34 }), []);
+  const center = useMemo<LatLngLiteral>(
+    () => ({ lat: 41, lng: 286 }),
+    []
+  );
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "8609ec89b75bc4b0",
@@ -27,6 +30,9 @@ export default function Map() {
   );
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
+  const houses = useMemo(() => {
+    if (office) return generateHouses(office);
+  }, [office]);
 
   return (
     <div className="container">
@@ -53,10 +59,19 @@ export default function Map() {
                 position={office}
                 icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
+              
 
-              <Circle center={office} radius={1609.34} options={closeOptions}/>
-              <Circle center={office} radius={4828.03} options={middleOptions}/>
-              <Circle center={office} radius={8046.72} options={farOptions}/>
+              {houses?.map((house) => (
+                <Marker key={house.lat} position={house} />
+              ))}
+
+              <Circle center={office} radius={1609.34} options={closeOptions} />
+              <Circle
+                center={office}
+                radius={4828.03}
+                options={middleOptions}
+              />
+              <Circle center={office} radius={8046.72} options={farOptions} />
             </>
           )}
         </GoogleMap>
