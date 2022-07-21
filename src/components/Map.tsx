@@ -15,11 +15,9 @@ type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
   const [office, setOffice] = useState<LatLngLiteral>();
+  const [directions, setDirections] = useState<DirectionsResult>();
   const mapRef = useRef<GoogleMap>();
-  const center = useMemo<LatLngLiteral>(
-    () => ({ lat: 41, lng: 286 }),
-    []
-  );
+  const center = useMemo<LatLngLiteral>(() => ({ lat: 41, lng: 286 }), []);
   const options = useMemo<MapOptions>(
     () => ({
       mapId: "8609ec89b75bc4b0",
@@ -33,6 +31,24 @@ export default function Map() {
   const houses = useMemo(() => {
     if (office) return generateHouses(office);
   }, [office]);
+
+  const fetchDirections = (house: LatLngLiteral) => {
+    if (!office) return;
+
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: house,
+        destination: office,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirections(result);
+        }
+      }
+    );
+  };
 
   return (
     <div className="container">
@@ -53,16 +69,34 @@ export default function Map() {
           options={options}
           onLoad={onLoad}
         >
+          {directions && (
+            <DirectionsRenderer
+              directions={directions}
+              options={{
+                polylineOptions: {
+                  zIndex: 50,
+                  strokeColor: "#1976D2",
+                  strokeWeight: 5,
+                },
+              }}
+            />
+          )}
+
           {office && (
             <>
               <Marker
                 position={office}
                 icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
-              
 
               {houses?.map((house) => (
-                <Marker key={house.lat} position={house} />
+                <Marker
+                  key={house.lat}
+                  position={house}
+                  onClick={() => {
+                    fetchDirections(house);
+                  }}
+                />
               ))}
 
               <Circle center={office} radius={1609.34} options={closeOptions} />
