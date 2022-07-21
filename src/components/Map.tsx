@@ -14,6 +14,7 @@ type DirectionsResult = google.maps.DirectionsResult;
 type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
+  const [office, setOffice] = useState<LatLngLiteral>();
   const mapRef = useRef<GoogleMap>()
   const center = useMemo<LatLngLiteral>(() => ({ lat: 32, lng: 34 }), []);
   const options = useMemo<MapOptions>(() => ({
@@ -32,6 +33,12 @@ export default function Map() {
     <div className="container">
       <div className="controls">
         <h1>Commute?</h1>
+        <Places setOffice={(position) => {
+          setOffice(position);
+          mapRef.current?.panTo(position);
+
+
+        }}/>
       </div>
       <div className="map">
         <GoogleMap
