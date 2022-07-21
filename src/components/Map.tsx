@@ -15,30 +15,29 @@ type MapOptions = google.maps.MapOptions;
 
 export default function Map() {
   const [office, setOffice] = useState<LatLngLiteral>();
-  const mapRef = useRef<GoogleMap>()
+  const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(() => ({ lat: 32, lng: 34 }), []);
-  const options = useMemo<MapOptions>(() => ({
-    mapId: "8609ec89b75bc4b0",
-    disableDefaultUI: true,
-    clickableIcon: false
-
-
-
-  }), []);
+  const options = useMemo<MapOptions>(
+    () => ({
+      mapId: "8609ec89b75bc4b0",
+      disableDefaultUI: true,
+      clickableIcon: false,
+    }),
+    []
+  );
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
-
 
   return (
     <div className="container">
       <div className="controls">
         <h1>Commute?</h1>
-        <Places setOffice={(position) => {
-          setOffice(position);
-          mapRef.current?.panTo(position);
-
-
-        }}/>
+        <Places
+          setOffice={(position) => {
+            setOffice(position);
+            mapRef.current?.panTo(position);
+          }}
+        />
       </div>
       <div className="map">
         <GoogleMap
@@ -48,11 +47,12 @@ export default function Map() {
           options={options}
           onLoad={onLoad}
         >
-          {office && <Marker position={office} icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"/>}
-
-
-
-
+          {office && (
+            <Marker
+              position={office}
+              icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+            />
+          )}
         </GoogleMap>
       </div>
     </div>
