@@ -17,6 +17,7 @@ export default function Map() {
   const mapRef = useRef<GoogleMap>()
   const center = useMemo<LatLngLiteral>(() => ({ lat: 32, lng: 34 }), []);
   const options = useMemo<MapOptions>(() => ({
+    mapId: "8609ec89b75bc4b0",
     disableDefaultUI: true,
     clickableIcon: false
 
