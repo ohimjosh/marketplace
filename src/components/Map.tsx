@@ -3,10 +3,12 @@ import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
-  Circle
+  Circle,
 } from "@react-google-maps/api";
 import Distance from "./Distance";
 import Places from "./Places";
+
+
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
@@ -110,6 +112,7 @@ export default function Map() {
             </>
           )}
         </GoogleMap>
+
       </div>
     </div>
   );

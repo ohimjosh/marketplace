@@ -10,6 +10,8 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type PlacesProps = {
   setOffice: (position: google.maps.LatLngLiteral) => void;
@@ -24,8 +26,21 @@ export default function Places({ setOffice }: PlacesProps) {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
+  const notify = () => {
+    toast.success("Found locations near you!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const handleSelect = async (val: string) => {
     setValue(val, false);
+    notify();
     clearSuggestions();
 
     const results = await getGeocode({ address: val });
@@ -50,6 +65,7 @@ export default function Places({ setOffice }: PlacesProps) {
             ))}
         </ComboboxList>
       </ComboboxPopover>
+      <ToastContainer theme="dark" />
     </Combobox>
   );
 }
