@@ -60,6 +60,8 @@ export default function Map() {
             mapRef.current?.panTo(position);
           }}
         />
+        {!office && <p>Enter the address of your office</p>}
+        {directions && <Distance leg={directions.routes[0].legs[0]} />}
       </div>
       <div className="map">
         <GoogleMap
