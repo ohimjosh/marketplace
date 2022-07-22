@@ -41,7 +41,7 @@ export default function Map() {
       {
         origin: house,
         destination: office,
-        travelMode: google.maps.TravelMode.DRIVING,
+        travelMode: google.maps.TravelMode.WALKING,
       },
       (result, status) => {
         if (status === "OK" && result) {
