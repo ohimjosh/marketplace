@@ -8,8 +8,6 @@ import {
 import Distance from "./Distance";
 import Places from "./Places";
 
-
-
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
 type MapOptions = google.maps.MapOptions;
@@ -112,7 +110,6 @@ export default function Map() {
             </>
           )}
         </GoogleMap>
-
       </div>
     </div>
   );
