@@ -3,8 +3,7 @@ import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
-  Circle,
-  MarkerClusterer,
+  Circle
 } from "@react-google-maps/api";
 import Distance from "./Distance";
 import Places from "./Places";
@@ -101,13 +100,13 @@ export default function Map() {
                 />
               ))}
 
-              <Circle center={office} radius={1609.34} options={closeOptions} />
+              <Circle center={office} radius={804.672} options={closeOptions} />
               <Circle
                 center={office}
-                radius={4828.03}
+                radius={1609.34}
                 options={middleOptions}
               />
-              <Circle center={office} radius={8046.72} options={farOptions} />
+              <Circle center={office} radius={3218.69} options={farOptions} />
             </>
           )}
         </GoogleMap>
