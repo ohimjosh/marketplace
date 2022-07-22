@@ -7,6 +7,8 @@ import {
 } from "@react-google-maps/api";
 import Distance from "./Distance";
 import Places from "./Places";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
@@ -47,6 +49,18 @@ export default function Map() {
         }
       }
     );
+  };
+
+  const notify = () => {
+    toast.success("Starting route!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   return (
@@ -96,6 +110,8 @@ export default function Map() {
                   position={house}
                   onClick={() => {
                     fetchDirections(house);
+                    notify();
+
                   }}
                 />
               ))}
@@ -110,6 +126,7 @@ export default function Map() {
             </>
           )}
         </GoogleMap>
+        <ToastContainer theme="dark" />
       </div>
     </div>
   );
